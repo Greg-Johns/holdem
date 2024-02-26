@@ -21,9 +21,8 @@ const Home: NextPage = () => {
       <main className={styles.main}>
 
         <h1>Texas Holdem</h1>
-        <Link href="/about">About</Link>
 
-        <form>
+        <form className={styles.form}>
           <label>
             Player Count
           </label>
@@ -47,6 +46,13 @@ const Home: NextPage = () => {
             Create Table
           </button>
         </form>
+
+        <footer className={styles.footer}>
+          <Link href="/fish_faucet">Fish faucet</Link>
+          <Link href="/table">table</Link>
+          <Link href="/about">About</Link>
+        </footer>
+
       </main>
 
     </div>
