@@ -60,6 +60,36 @@ const Home: NextPage = () => {
           method: "eth_requestAccounts",
         });
 
+        try {
+          await ethereum.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: "0x5aff" }],
+          });
+        } catch (switchError) {
+            // This error code indicates that the chain has not been added to MetaMask.
+            if ((switchError as { code: number }).code === 4902) {
+                try {
+                    await ethereum.request({
+                        method: "wallet_addEthereumChain",
+                        params: [
+                            {
+                                chainId: "0x5aff",
+                                chainName: "Oasis Sapphire Testnet logoOasis",
+                                blockExplorerUrls: ["https://testnet.explorer.sapphire.oasis.dev/"],
+                                nativeCurrency: {
+                                    symbol: "TEST",
+                                    decimals: 18,
+                                },
+                                rpcUrls: ["https://testnet.sapphire.oasis.dev"],
+                            },
+                        ],
+                    });
+                } catch (addError) {
+                  console.log("switching error", addError);
+                }
+            }
+        }
+
         setclient({
           isConnected: true,
           address: accounts?.[0], // Update the type of the address property to allow null
